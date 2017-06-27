@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
     private void loadWeatherData(){
 
         String location = SunshinePreferences.getPreferredWeatherLocation(this);
-        //URL weatherSearchUrl = NetworkUtils.buildUrl(location);
+        //System.out.println("Location: " + location);
+
         new FetchWeatherTask().execute(location);
     }
 
@@ -80,12 +81,15 @@ public class MainActivity extends AppCompatActivity {
         // TODO (6) Override the doInBackground method to perform your network requests
         @Override
         protected String[] doInBackground(String... params) {
+            //System.out.println("past params: "+params);
 
             if (params.length == 0){
                 return null;
             }
 
             String location = params[0];
+            //System.out.println("From params[0]: "+location);
+
             URL weatherSearchResultsUrl = NetworkUtils.buildUrl(location);
 
             try{
