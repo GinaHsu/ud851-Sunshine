@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // TODO (8) Create a method that will get the user's preferred location and execute your new AsyncTask and call it loadWeatherData
+
+    /**
+     * This method will get the user's preferred location for weather, and then tell some
+     * background method to get the weather data in the background.
+     */
     private void loadWeatherData(){
 
         String location = SunshinePreferences.getPreferredWeatherLocation(this);
@@ -71,13 +76,15 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO (5) Create a class that extends AsyncTask to perform network requests
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]>{
-        // TODO (6) Override the doInBackground method to perform your network requests
 
+        // TODO (6) Override the doInBackground method to perform your network requests
         @Override
         protected String[] doInBackground(String... params) {
+
             if (params.length == 0){
                 return null;
             }
+
             String location = params[0];
             URL weatherSearchResultsUrl = NetworkUtils.buildUrl(location);
 
@@ -87,11 +94,10 @@ public class MainActivity extends AppCompatActivity {
 
                 String[] simpleJsonWeatherData = OpenWeatherJsonUtils
                         .getSimpleWeatherStringsFromJson(MainActivity.this, jsonWeatherResponse);
-                        //OpenWeatherJsonUtils.getSimpleWeatherStringsFromJson(MainActivity.this, jsonWeatherResponse);
 
                 return simpleJsonWeatherData;
 
-            }catch (IOException e){
+            }catch (Exception e){
                 e.printStackTrace();
                 return null;
             }
@@ -101,7 +107,11 @@ public class MainActivity extends AppCompatActivity {
         // TODO (7) Override the onPostExecute method to display the results of the network request
         @Override
         protected void onPostExecute(String[] weatherResults) {
-
+            /*
+             * Iterate through the array and append the Strings to the TextView. The reason why we add
+             * the "\n\n\n" after the String is to give visual separation between each String in the
+             * TextView. Later, we'll learn about a better way to display lists of data.
+             */
             if(weatherResults != null && !weatherResults.equals(""))
                 for(String weatherString : weatherResults)
                 mWeatherTextView.append((weatherString)+"\n\n\n");
