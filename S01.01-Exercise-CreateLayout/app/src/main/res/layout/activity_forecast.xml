@@ -35,7 +35,7 @@
         android:id="@+id/tv_weather_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:pedding = "16dp"
+        android:padding = "16dp"
         android:textSize="20sp"/>
     </ScrollView>
 </FrameLayout>
