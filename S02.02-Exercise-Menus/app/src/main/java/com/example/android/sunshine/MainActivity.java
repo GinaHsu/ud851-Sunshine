@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -109,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
     // TODO (6) Return true to display the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.forecast, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.forecast, menu);
         return true;
     }
 
@@ -119,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
         int menuItemThatWasSelected= item.getItemId();
 
         if(menuItemThatWasSelected == R.id.action_refresh){
-            Context context = MainActivity.this;
-            String isRefresh = "Refreshing";
-            Toast.makeText(context, isRefresh, Toast.LENGTH_LONG).show();
+           mWeatherTextView.setText("");
+            loadWeatherData();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
